@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  	<script src="/d3.v3.min.js"></script>
+  	<script src="/dimple.v2.1.2.min.js"></script>
+    <style>
+    body {
+      margin: 50px;
+    }
+    </style>
+ </head>
+ <body>
+
+
+<div id='chartContainer'>
+		<h2>Medals count with Gender</h2>
+        <h4><i>*Men have more more medals</i><h4>
+		<script type="text/javascript">
+			var svg2 = dimple.newSvg('#chartContainer', 600,400);
+			d3.csv('athlete_events_cleaned.csv', function(data) {
+			var ChartInstance = new dimple.chart(svg2,data);
+			ChartInstance.setBounds(60,30,510,305);
+			var x = ChartInstance.addCategoryAxis('x', 'Medal');
+			// x.addOrderRule('Type');
+			var y = ChartInstance.addPctAxis('y', 'count');
+			//y.showbycent = true;
+			//var y = ChartInstance.addMeasureAxis('y', 'Count');
+			var s = ChartInstance.addSeries('Sex', dimple.plot.bar);
+			ChartInstance.addLegend(60, 10, 510, 20, "right");
+
+
+
+			ChartInstance.draw(1000);	
+
+			 });
+		</script>
+		</div>
+
+
+	
+	<div id='PiechartContainer1'>
+			<h2>Conduct Games(SEASON SUMMER) </h2>
+        <h4><i>*USA conducted most games in summer  </i><h4>
+		<script type="text/javascript">
+			var svg1 = dimple.newSvg("#PiechartContainer1", 590, 400);
+			d3.csv("athlete_events_cleaned.csv", function (data) {
+			var ChartInstance = new dimple.chart(svg1, data);
+			ChartInstance.setBounds(20, 20, 460, 360)
+			ChartInstance.addMeasureAxis("p", "Season");
+			ChartInstance.addSeries("NOC", dimple.plot.pie);
+			ChartInstance.addLegend(500, 20, 90, 300, "left");
+			ChartInstance.draw();
+			});
+		</script>
+	</div> 
+
+
+ <div id='PiechartContainer2'>
+		<h2>Players according to age( FOR MALE PLAYERS)</h2>
+		<h4><i>*Most of the players are between age group of leass than 30 </i><h4>
+		
+		<script type="text/javascript">
+			var svg9 = dimple.newSvg("#PiechartContainer2", 590, 400);
+			d3.csv("athlete_events_cleaned.csv", function (olddata) {
+			data =modify_data(olddata);			 
+			var ChartInstance = new dimple.chart(svg9, data);
+			ChartInstance.setBounds(20, 20, 460, 360)
+			ChartInstance.addMeasureAxis("p", "Sex");
+			ChartInstance.addSeries("Age", dimple.plot.pie);
+			ChartInstance.addLegend(500, 20, 90, 300, "left");
+			ChartInstance.draw();
+			});
+		</script>
+		
+		<script type="text/javascript">
+		    var ctr = 0;
+			function modify_data(data){
+				data.forEach(myFunction);	
+				return data;				
+			};
+			function myFunction(item) {
+			    if((item["Age"])<=30){
+					(item["Age"])='young';
+				} 
+				else if(((item["Age"])>30)&((item["Age"])<=35)){
+					(item["Age"])='Adult';
+							} 	
+						
+				else {
+					(item["Age"])='old';
+				};				
+			}
+		</script>
+
+</div>
+		<div id="chartContainer10">
+		<h2>Medals According to Sport</h2>
+		 
+		<h4><i>*Maximum numer of medals are in Athletics</i><h4>
+		<script type="text/javascript">
+			var svg10 = dimple.newSvg("#chartContainer10", 590, 400);
+			d3.csv("athlete_events_cleaned.csv", function (data) {
+			var myChart = new dimple.chart(svg10, data);
+			  myChart.setBounds(60, 45, 510, 315)
+			  myChart.addCategoryAxis("x", "Sport");
+			  myChart.addMeasureAxis("y", "count");
+			  myChart.addSeries("Medal", dimple.plot.bar);
+			  myChart.addLegend(200, 10, 380, 20, "right");
+			  myChart.draw();
+			});
+		  </script>
+
+		</div>
+		
+
+	
+ </body>
+ </html> 
